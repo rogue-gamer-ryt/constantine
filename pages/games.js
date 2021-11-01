@@ -20,6 +20,20 @@ export default function Games({
 }) {
   const [searchValue, setSearchValue] = useState("");
 
+  const filteredCurrentlyPlayingGames = currentlyPlayingGames.filter(
+    (game) =>
+    game.name.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
+  const filteredCompletedGames = completedGames.filter(
+    (game) =>
+    game.name.toLowerCase().includes(searchValue.toLowerCase())
+  );
+  const filteredStillPlayingGames = stillPlayingGames.filter(
+    (game) =>
+    game.name.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
   return (
     <>
       <Head>
@@ -57,15 +71,18 @@ export default function Games({
             <Heading letterSpacing="tight" mb={5} as="h4" size="lg">
               Currently Playing
             </Heading>
-            <Game allGames={currentlyPlayingGames} />
+            {!filteredCurrentlyPlayingGames.length && "No games found :("}
+            <Game allGames={filteredCurrentlyPlayingGames} />
             <Heading letterSpacing="tight" mb={5} as="h4" size="lg">
               Constantly making progress time-to-time
             </Heading>
-            <Game allGames={stillPlayingGames} />
+            {!filteredStillPlayingGames.length && "No games found :("}
+            <Game allGames={filteredStillPlayingGames} />
             <Heading letterSpacing="tight" mb={5} as="h4" size="lg">
               Played
             </Heading>
-            <Game allGames={completedGames} />
+            {!filteredCompletedGames.length && "No games found :("}
+            <Game allGames={filteredCompletedGames} />
           </Flex>
         </Stack>
       </Container>
