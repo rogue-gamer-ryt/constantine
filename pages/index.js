@@ -1,48 +1,44 @@
-import Head from 'next/head'
-import Layout, { siteTitle } from '../components/layout'
-import utilStyles from '../styles/utils.module.css'
-import { getSortedPostsData } from '../lib/post'
-import Link from 'next/link'
-import Date from '../components/date'
+import { Flex, Heading, HStack, Text, useColorMode } from "@chakra-ui/react";
+import Head from "next/head";
+import Container from "../components/Container";
+import ProfileCard from "../components/ProfileCard";
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
-  return {
-    props: {
-      allPostsData
-    }
-  }
-}
 
-export default function Home({ allPostsData}) {
+export default function Index() {
+  const { colorMode } = useColorMode();
+  const colorSecondary = {
+    light: "gray.700",
+    dark: "gray.400",
+  };
   return (
-    <Layout home>
+    <Container centerContent>
       <Head>
-        <title>{siteTitle}</title>
+        <title>Home - Ashun Kothari</title>
       </Head>
-      <section className={utilStyles.headingMd}>
-        <p>Howdy!</p>
-        <p>
-          (This is a sample website - you’ll be building a site like this on{' '}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
-        </p>
-      </section>
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
-        <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) =>(
-            <li className={utilStyles.listItem} key={id}>
-              <Link href={`/posts/${id}`}>
-                <a>{title}</a>
-              </Link>
-              <br />
-              <small className={utilStyles.lightText}>
-                <Date dateString={date} />
-              </small>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </Layout>
-  )
+      <HStack
+        as="main"
+        spacing={8}
+        justifyContent="center"
+        alignItems="flex-start"
+        m="0 auto 4rem auto"
+        maxWidth="800px"
+        px={2}
+      >
+        <ProfileCard />
+        <Flex
+          flexDirection="column"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+          maxWidth="400px"
+        >
+          <Heading mb={3}>Hi, I'm Ashun Kothari</Heading>
+          <Text color={colorSecondary[colorMode]}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ante
+            nunc, finibus sit amet purus quis, congue vulputate ipsum. Phasellus
+            lobortis bibendum orci, quis imperdiet lectus imperdiet porttitor.
+          </Text>
+        </Flex>
+      </HStack>
+    </Container>
+  );
 }
