@@ -7,7 +7,8 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import Head from "next/head";
-import { FaFacebook, FaTwitter } from "react-icons/fa";
+import NextLink from "next/link";
+import { FaFacebook, FaTwitter, FaGithub } from "react-icons/fa";
 import Container from "../components/Container";
 import ProfileCard from "../components/ProfileCard";
 
@@ -43,12 +44,16 @@ export default function Index() {
             Why don't you take a look around so you can know me be better
           </Text>
           <HStack mt={3}>
-            <Button colorScheme="facebook" leftIcon={<FaFacebook />}>
-              Facebook
-            </Button>
-            <Button colorScheme="twitter" leftIcon={<FaTwitter />}>
-              Twitter
-            </Button>
+            <NextLink href="https://github.com/rogue-gamer-ryt">
+              <Button colorScheme="gray" leftIcon={<FaGithub />}>
+                Github
+              </Button>
+            </NextLink>
+            <NextLink href="https://twitter.com/ashun_77">
+              <Button colorScheme="twitter" leftIcon={<FaTwitter />}>
+                Twitter
+              </Button>
+            </NextLink>
           </HStack>
         </Flex>
       </HStack>
