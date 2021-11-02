@@ -79,7 +79,7 @@ export default function Games({
             {!filteredStillPlayingGames.length && "No games found :("}
             <Game allGames={filteredStillPlayingGames} />
             <Heading letterSpacing="tight" mb={5} as="h4" size="lg">
-              Played
+              Completed
             </Heading>
             {!filteredCompletedGames.length && "No games found :("}
             <Game allGames={filteredCompletedGames} />
