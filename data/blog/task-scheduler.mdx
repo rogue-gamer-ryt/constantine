@@ -1,0 +1,60 @@
+---
+title: 'Task Scheduler using Django and Celery'
+publishedAt: '2021-06-20'
+summary: 'This project is to create a service that could run and manage a task/script at a specific time.'
+---
+# Task Scheduler
+At time we need to run a bunch of scheduled jobs to do some work. Crontab is a a great utility for running such scheduled jobs but it has its limitations. Lets see what all things could make a better scheduler
+
+## Requirement checklist
+- [ ] Ability to run a job manually without using the entire crontab command
+- [ ] Check the status of the scheduled job(Completed/Failed)
+- [ ] Jobs which would be parameterized
+- [ ] Have a UI to manage scheduled jobs. We should be able to perform operations like - scheduling it, creating a new job, assigning the time when it should run 
+
+## Tech stack based on the requirement
+Based on the requirement our candidate to manage these scheduled jobs or `tasks` is celery.   
+Here is the tech stack which we will be using
+* [Django](https://www.djangoproject.com/start/) - To provide a simple interface to manage the scheduler
+* [Celery](https://docs.celeryproject.org/en/stable/getting-started/first-steps-with-celery.html) - To run and manage tasks
+* [Redis](https://redis.io/) - Our message broker
+* [Postgres](https://www.postgresql.org/) - To store task relevant data(status, scheduler, etc). "The World's Most Advanced Open Source Relational Database"
+
+## High level Dataflow diagram
+![Task Scheduler Architecture](../images/task-scheduler/task_scheduler_arch.png)
+
+## Setting up
+- You can also clone/fork this project to get started. I have configured all the below mentioned plugins and you can just run the project using `docker-compose`. [Project Link](https://github.com/rogue-gamer-ryt/task_scheduler)
+- You can use this guide to setup [django + celery ]( https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html)
+- We will use [django-celery-beat](https://django-celery-beat.readthedocs.io/en/latest/) to store the schedule of our tasks in database.
+- [django-celery-results](https://django-celery-results.readthedocs.io/en/latest/) is another plugin which help us in storing the task results in database and make it accessible by the django admin page directly (You can use flower for checking up the results)
+```
+# settings.py
+# Storing the celery tasks results
+CELERY_RESULT_BACKEND = "django-db"
+```
+- In the `settings.py` we can define the redis server details like this
+```
+# Settings for celery and redis configurations
+CELERY_BROKER_URL = 'redis://redis:6379'  
+```
+
+
+
+### Screenshots of the project
+#### Django Admin Home
+![admin_home](../images/task-scheduler/admin_home.png)
+### List of Tasks
+![tasks](../images/task-scheduler/tasks.png)
+
+### Add a Task
+ ![new_task](../images/task-scheduler/new_task.png)
+ 
+### Check Tasks results
+ ![task_result](../images/task-scheduler/task_result.png)
+## Revising the requirements
+- [x] Ability to run a job manually without using the entire crontab command
+- [x] Check the status of the scheduled job(Completed/Failed)
+- [x] Jobs which would be parameterized
+- [ ] Have a UI to manage scheduled jobs. We should be able to perform operations like - scheduling it, creating a new job, assigning the time when it should run :  _We can manage jobs from the UI but we still need to make code changes if we have to create a new task_
+ 
