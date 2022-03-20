@@ -79,6 +79,16 @@ const Container = ({ children }) => {
               Games
             </Button>
           </NextLink>
+          <NextLink href="/music" passHref>
+            <Button
+              as="a"
+              variant="ghost"
+              p={[1, 2, 4]}
+              _hover={{ backgroundColor: navHoverBg[colorMode] }}
+            >
+              Music
+            </Button>
+          </NextLink>
         </Box>
         <DarkModeSwitch />
       </StickyNav>
